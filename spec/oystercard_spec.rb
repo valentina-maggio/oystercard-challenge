@@ -10,7 +10,12 @@ describe Oystercard do
   end
 
   it 'tops up the balance' do
-    # when you add 20 to the balance it returns 20 (the balance)
     expect { subject.top_up(20) }.to change { subject.balance }.by(20)
-  end 
+  end
+
+  it 'stops you topping up over £90' do
+    too_much = Oystercard::MAX_BALANCE + 1
+    expect { subject.top_up(too_much) }.to raise_error 'Maximum limit reached'
+  end
+  
 end
