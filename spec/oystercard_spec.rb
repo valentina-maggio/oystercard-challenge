@@ -1,24 +1,34 @@
 require 'oystercard'
 
-describe Oystercard do 
+describe Oystercard do
+  subject(:card) { described_class.new }
+
   it 'has an initial balance of 0' do
-    expect(subject.balance).to be_zero
+    expect(card.balance).to be_zero
   end
 
   it 'responds to top up method' do
-    expect(subject).to respond_to(:top_up)
+    expect(card).to respond_to(:top_up)
   end
 
   it 'tops up the balance' do
-    expect { subject.top_up(20) }.to change { subject.balance }.by(20)
+    expect { card.top_up(20) }.to change { card.balance }.by(20)
   end
 
   it 'stops you topping up over £90' do
     too_much = Oystercard::MAX_BALANCE + 1
-    expect { subject.top_up(too_much) }.to raise_error 'Maximum limit reached'
+    expect { card.top_up(too_much) }.to raise_error 'Maximum limit reached'
   end
   
   it 'deducts money from the balance' do
-    expect { subject.deduct(5) }.to change { subject.balance }.by(-5)
+    expect { card.deduct(5) }.to change { card.balance }.by(-5)
+  end
+
+  it 'responds to in_journey? method' do
+    expect(card).to respond_to(:in_journey?)
+  end
+
+  it 'defaults to not on journey' do
+    expect(card.in_journey?).to be false
   end
 end
