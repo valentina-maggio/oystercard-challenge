@@ -31,4 +31,17 @@ describe Oystercard do
   it 'defaults to not on journey' do
     expect(card.in_journey?).to be false
   end
+
+  describe '#touch_in' do
+    it 'starts a journey' do
+      expect { card.touch_in }.to change { card.in_journey? }.to be true 
+    end
+  end
+
+  describe '#touch_out' do
+    it 'ends a journey' do
+      card.touch_in
+      expect { card.touch_out }.to change { card.in_journey? }.to be false
+    end
+  end
 end
