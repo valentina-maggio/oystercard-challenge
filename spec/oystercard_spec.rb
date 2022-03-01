@@ -16,6 +16,10 @@ describe Oystercard do
   it 'has a default entry station of nil' do
     expect(card.entry_station).to be_nil
   end
+
+  it 'has a default empty array to store journeys' do
+    expect(card.journeys).to eq []
+  end
   
   describe '#top_up' do
     it 'responds to top up method' do
@@ -64,16 +68,30 @@ describe Oystercard do
       card.touch_in(station.name)
     end
 
+    it 'takes one argument' do
+      expect(card).to respond_to(:touch_out).with(1).argument
+    end
+
     it 'ends a journey' do
-      expect { card.touch_out }.to change { card.in_journey? }.to be false
+      expect { card.touch_out(station.name) }.to change { card.in_journey? }.to be false
     end
 
     it 'deducts the minimum fare when touching out' do
-      expect { card.touch_out }.to change { card.balance }.by(-Oystercard::MIN_FARE)
+      expect { card.touch_out(station.name) }.to change { card.balance }.by(-Oystercard::MIN_FARE)
     end
 
     it 'resets the entry station' do
-      expect { card.touch_out }.to change { card.entry_station }.from(station.name).to(nil)
+      expect { card.touch_out(station.name) }.to change { card.entry_station }.from(station.name).to(nil)
     end
+  end
+  it 'stores the entry station' do
+    card.top_up(Oystercard::MIN_FARE + 1)
+    allow(station).to receive(:name).and_return('Camden', 'Victoria', 'Euston')
+    card.touch_in(station.name)
+    card.touch_out(station.name)
+    expect(card.journeys).to include(
+      entry: 'Camden',
+      exit: 'Victoria'
+    )
   end
 end 
