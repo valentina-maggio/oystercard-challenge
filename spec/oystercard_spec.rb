@@ -34,12 +34,18 @@ describe Oystercard do
 
   describe '#touch_in' do
     it 'starts a journey' do
+ad      card.top_up(Oystercard::MIN_BALANCE + 1)
       expect { card.touch_in }.to change { card.in_journey? }.to be true 
+    end
+
+    it 'raises an error if insufficient funds' do
+      expect { card.touch_in }.to raise_error 'Insufficient Funds'
     end
   end
 
   describe '#touch_out' do
     it 'ends a journey' do
+      card.top_up(Oystercard::MIN_BALANCE + 1)
       card.touch_in
       expect { card.touch_out }.to change { card.in_journey? }.to be false
     end
