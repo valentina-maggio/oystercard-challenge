@@ -1,4 +1,6 @@
 class Journey
+  PENALTY_FARE = 6
+  MIN_FARE = 1
 
   def initialize
     @entry = nil
@@ -15,6 +17,14 @@ class Journey
 
   def complete?
     @entry != nil && @exit != nil
+  end
+
+  def fare
+    if complete? == true
+      MIN_FARE
+    else
+      PENALTY_FARE
+    end
   end
 
   def journey_record
