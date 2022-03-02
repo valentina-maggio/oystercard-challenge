@@ -20,11 +20,7 @@ class Journey
   end
 
   def fare
-    if complete? == true
-      MIN_FARE
-    else
-      PENALTY_FARE
-    end
+    complete? ? MIN_FARE : PENALTY_FARE
   end
 
   def journey_record
