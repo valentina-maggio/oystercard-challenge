@@ -33,11 +33,6 @@ describe Oystercard do
   end
   
   describe '#touch_in' do
-    it 'starts a journey' do
-      card.top_up(Oystercard::MIN_FARE + 1)
-      expect { card.touch_in(station.name) }.to change { card.in_journey? }.to be true 
-    end
-
     it 'raises an error if insufficient funds' do
       expect { card.touch_in(station.name) }.to raise_error 'Insufficient Funds'
     end
@@ -56,10 +51,6 @@ describe Oystercard do
 
     it 'takes one argument' do
       expect(card).to respond_to(:touch_out).with(1).argument
-    end
-
-    it 'ends a journey' do
-      expect { card.touch_out(station.name) }.to change { card.in_journey? }.to be false
     end
 
     it 'deducts the minimum fare when touching out' do

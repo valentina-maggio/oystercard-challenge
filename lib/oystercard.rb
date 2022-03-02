@@ -1,3 +1,5 @@
+require 'journey'
+
 class Oystercard
   DEFAULT_BALANCE = 0
   MAX_BALANCE = 90
@@ -24,7 +26,6 @@ class Oystercard
 
   def touch_out(exit_station)
     deduct
-    journeys_history(exit_station)
     @entry_station = nil
   end
 
