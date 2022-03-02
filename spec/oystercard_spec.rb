@@ -1,9 +1,10 @@
 require 'oystercard'
+require 'journey'
 
 describe Oystercard do
   subject(:card) { described_class.new }
-  
   let(:station) { double(:station_double) }
+  let(:journey) { double(:journey_double) }
   
   before do
     allow(station).to receive(:name).and_return('Euston') 
@@ -11,10 +12,6 @@ describe Oystercard do
 
   it 'has an initial balance of 0' do
     expect(card.balance).to be_zero
-  end
-
-  it 'has a default entry station of nil' do
-    expect(card.entry_station).to be_nil
   end
 
   describe '#top_up' do
@@ -36,11 +33,6 @@ describe Oystercard do
     it 'raises an error if insufficient funds' do
       expect { card.touch_in(station.name) }.to raise_error 'Insufficient Funds'
     end
-
-    it 'changes the entry station' do
-      card.top_up(Oystercard::MIN_FARE + 1)
-      expect { card.touch_in(station.name) }.to change { card.entry_station }.from(nil).to(station.name)
-    end
   end
 
   describe '#touch_out' do
@@ -53,12 +45,9 @@ describe Oystercard do
       expect(card).to respond_to(:touch_out).with(1).argument
     end
 
-    it 'deducts the minimum fare when touching out' do
+    it 'deducts the minimum fare after complete journey' do
+      allow(journey).to receive(:fare).and_return(1)
       expect { card.touch_out(station.name) }.to change { card.balance }.by(-Oystercard::MIN_FARE)
-    end
-
-    it 'resets the entry station' do
-      expect { card.touch_out(station.name) }.to change { card.entry_station }.from(station.name).to(nil)
     end
   end
 end
