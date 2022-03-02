@@ -84,6 +84,7 @@ describe Oystercard do
       expect { card.touch_out(station.name) }.to change { card.entry_station }.from(station.name).to(nil)
     end
   end
+
   it 'stores the entry station' do
     card.top_up(Oystercard::MIN_FARE + 1)
     allow(station).to receive(:name).and_return('Camden', 'Victoria', 'Euston')
@@ -94,4 +95,4 @@ describe Oystercard do
       exit: 'Victoria'
     )
   end
-end 
+end
