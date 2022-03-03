@@ -19,11 +19,11 @@ class Journey
     { entry: @entry, exit: @exit, fare: fare }
   end
 
-  private
-
   def complete?
     @entry != nil && @exit != nil
   end
+  
+  private
 
   def fare
     complete? ? MIN_FARE : PENALTY_FARE

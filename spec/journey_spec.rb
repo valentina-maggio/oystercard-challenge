@@ -42,4 +42,12 @@ describe Journey do
      )
     end
   end
+
+  # journey complete?
+  context 'checks if the journey is complete' do
+    it 'returns false when incomplete' do
+      journey.start_journey('Waterloo')
+      expect(journey.complete?).to be false
+    end
+  end
 end
