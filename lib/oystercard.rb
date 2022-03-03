@@ -19,14 +19,7 @@ class Oystercard
   end
 
   def touch_in(entry_station)
-    # Check if there is already an entry station in the current journey
-    unless @current_journey.journey_record[:entry].nil?
-      # They have touched in but not touched out
-      # Charge a penalty fare
-      deduct
-    end
-    # previous journey gets 'completed'
-    # start a new journey
+    deduct unless @current_journey.journey_record[:entry].nil?
     fail 'Insufficient Funds' if under_min_balance?
 
     @current_journey.start_journey(entry_station)
@@ -51,3 +44,4 @@ class Oystercard
     @balance -= @current_journey.journey_record[:fare]
   end
 end
+
