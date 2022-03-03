@@ -46,7 +46,7 @@ describe Oystercard do
     end
 
     it 'deducts the minimum fare after complete journey' do
-      allow(journey).to receive(:fare).and_return(1)
+      allow(journey).to receive(:journey_record).and_return({ fare: Oystercard::MIN_FARE })
       expect { card.touch_out(station.name) }.to change { card.balance }.by(-Oystercard::MIN_FARE)
     end
   end

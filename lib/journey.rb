@@ -15,6 +15,12 @@ class Journey
     @exit = exit_station
   end
 
+  def journey_record
+    { entry: @entry, exit: @exit, fare: fare }
+  end
+
+  private
+
   def complete?
     @entry != nil && @exit != nil
   end
@@ -22,8 +28,5 @@ class Journey
   def fare
     complete? ? MIN_FARE : PENALTY_FARE
   end
-
-  def journey_record
-    { entry: @entry, exit: @exit }
-  end
+  
 end

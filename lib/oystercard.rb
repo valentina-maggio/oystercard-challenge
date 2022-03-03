@@ -40,6 +40,6 @@ class Oystercard
   end
 
   def deduct
-    @balance -= @current_journey.fare
+    @balance -= @current_journey.journey_record[:fare]
   end
 end
