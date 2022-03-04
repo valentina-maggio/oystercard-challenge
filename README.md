@@ -1,7 +1,7 @@
 # Oystercard challenge
 
 
-Co-authored-by: [Valentina Maggio](https://github.com/valentina-maggio), [Paul Kilgarrif]https://github.com/PKilgarriff), [Jonny Abrams](https://github.com/jonnyabrams)
+Co-authored-by: [Valentina Maggio](https://github.com/valentina-maggio), [Paul Kilgarrif](https://github.com/PKilgarriff), [Jonny Abrams](https://github.com/jonnyabrams)
  
 
  ```
